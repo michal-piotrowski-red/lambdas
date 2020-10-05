@@ -68,6 +68,13 @@ void findFirstShapeMatchingPredicate(const Collection& collection,
 // insert(double{1.1}, circles);        // not allowed
 // You may use SFINAE (`std::enable_if`) or `constexpr if`.
 
+
+template<typename T, typename = std::enable_if_t<std::is_base_of<Circle, T>::value> >
+//template<typename T, std::enable_if_t<std::is_base_of<Circle, T>::value, int> = 0 >
+void insert(T&& circle, Collection& circles) {
+    circles.push_back(make_shared<Circle>(circle));
+}
+
 int main() {
     Collection circles {
         make_shared<Circle>(4.0),
@@ -76,9 +83,9 @@ int main() {
         make_shared<Circle>(4.0),
     };
 
-    // insert(Circle{1.0}, circles);
-    // insert(Ellipse{1.1}, circles);
-    // insert(double{1.1}, circles);
+    insert(Circle{1.0}, circles);
+    insert(Ellipse{1.1}, circles);
+    //insert(double{1.2}, circles);
 
     printCollection(circles);
 
