@@ -14,3 +14,4 @@ foreach(FILE ${SOURCES})
 endforeach(FILE)
 
 target_link_libraries(06_synchronization pthread)
+target_link_libraries(08_schedule pthread)
